@@ -8,6 +8,7 @@ and connect a Windows 10 client to simulate a company network.
 - DC-01 (Windows Server 2022)
   - 2 vCPUs / 4GB ram
   - Internal Network
+  - NAT
 
 - Client-01 (Windows 10)
   - 2 vCPUs / 4GB ram
