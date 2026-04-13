@@ -4,12 +4,20 @@
 Set up a basic Active Directory environment using Windows Server 2022  
 and connect a Windows 10 client to simulate a company network.
 
-## Lab Setup
+## Lab Setup / Environment
 - DC-01 (Windows Server 2022)
   - 2 vCPUs / 4GB ram
   - Internal Network
-  - NAT
+  - NAT (lab-net)
 
 - Client-01 (Windows 10)
   - 2 vCPUs / 4GB ram
-  - Internal Network
+  - Internal Network (lab-net)
+
+## Summary
+
+## Result
+
+## Skills Demonstrated
+
+  
