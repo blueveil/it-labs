@@ -7,5 +7,5 @@ This repo contains my IT lab work using VirtualBox.
 - Build hands-on IT skills
 
 ## Labs
-* [Lab 1: Basic Active Directory Setup]
+* Lab 1: Active Directory Setup
 * Lab 2: (Coming Soon)
