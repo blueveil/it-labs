@@ -66,5 +66,12 @@ Set up a basic Active Directory environment using Windows Server 2022 and connec
 
 ![Successful Ping Test](screenshots/06-ping-test-success-user-01.png)
 
-## Phase 3: (To be continued)
+## Phase 3: Active Directory Domain Services (AD DS)
+
+### 1. Role Installation
+- Navigate to **Server Manager** -> **Manage** -> **Add Roles and Features**.
+- Selected **Active Directory Domain Services** and **DNS Server** roles.
+- Confirmed the addition of required management features and initiated the installation process.
+
+- ![AD DS Role Selection](screenshots/07-ad-ds-role-selection.png)
   
