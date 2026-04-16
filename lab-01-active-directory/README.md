@@ -1,4 +1,4 @@
-# Lab 01 – Setup & Active Directory
+# Lab 01 – Active Directory
 
 ## Objective
 Set up a basic Active Directory environment using Windows Server 2022 and connect a Windows 10 client to simulate a company network.
