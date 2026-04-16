@@ -15,7 +15,7 @@ Set up a basic Active Directory environment using Windows Server 2022 and connec
 ---
 
 ## Phase 0: VM Setup & VirtualBox Configuration
-1. **Machine Creation:**
+1. **VM Creation:**
    - DC-01: Windows Server 2022 ISO, 4GB RAM, 2 CPU cores.
    - USER-01: Windows 10 ISO, 4GB RAM, 2 CPU cores.
 2. **General Settings:**
@@ -32,9 +32,9 @@ Set up a basic Active Directory environment using Windows Server 2022 and connec
 ## Phase 1: Operating System Deployment
 - **DC-01:** Installed Windows Server 2022 Standard (Desktop Experience). Set Administrator password to `P@ssword123`.
 - **USER-01:** Installed Windows 10 Pro. 
-  - Offline setup: Skipped internet connection (Limited Setup) as DC-01 was not yet acting as a gateway/DNS.
-  - User: `j-lanes` | Password: `P@ssword123`.
-  - Privacy: Disabled all telemetry, diagnostic data, and Cortana.
+  - Offline setup: Skipped internet connection (Limited Setup).
+  - User: `j-lanes` 
+  - Privacy: Disabled telemetry, diagnostic data, and Cortana.
 
 ![DC-01 Desktop](screenshots/02-desktop-dc-01.png) ![USER-01 Desktop](screenshots/02-desktop-user-01.png)
 
@@ -73,5 +73,25 @@ Set up a basic Active Directory environment using Windows Server 2022 and connec
 - Selected **Active Directory Domain Services** and **DNS Server** roles.
 - Confirmed the addition of required management features and initiated the installation process.
 
-- ![AD DS Role Selection](screenshots/07-ad-ds-role-selection.png)
+![AD DS Role Selection](screenshots/07-ad-ds-role-selection-dc-01.png)
+
+### 2. Domain Controller Promotion
+- Accessed the **Deployment Configuration** through the yellow Server Manager notification flag.
+- Selected **Add a new forest** and set the root domain name as `jlab.local`.
+- Configured Domain Controller Options and Functional Level of **Windows Server 2016** and set the DSRM password.
+
+![New Forest Setup](screenshots/08-new-forest-setup-dc-01.png)
+
+### 3. Prerequisites and Deployment
+- Ran the **Prerequisites Check* to ensure environment compatibility.
+- Confirmed "All prerequisite checks passed successfully" status.
+
+![Prerquisites Check Passes](screenshots/09-prereq-check-passed-dc-01.png)
+
+### 4. After Promotion Status
+- Confirmed that the server is successfully operating as a Domain Controller by validating the **AD DS** and **DNS** service status.
+- Authenticated via the new domain administrator context: `JLAB\Administrator`.
+
+![Domain Login Screen](screenshots/10-dc-login-screen-dc-01.png) ![Server Manager AD Active](screenshots/11-server-manager-ad-active-dc-01.png)
+
   
