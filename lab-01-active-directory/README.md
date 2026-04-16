@@ -94,7 +94,25 @@ Set up a basic Active Directory environment using Windows Server 2022 and connec
 
 ![Domain Login Screen](screenshots/10-dc-login-screen-dc-01.png) ![Server Manager AD Active](screenshots/11-server-manager-ad-active-dc-01.png)
 
-## Phase 4: Basic Domain Setup
-(Coming soon.)
+## Phase 4: Domain Setup (OUs & Users)
+
+### 1. DNS and Network Optimization
+- After promotion, I updated DC-01 IPv4 configuration to point to it's own static IP (`192.168.10.10`) for DNS resolution.
+
+### 2. Organizational Unit (OU) Structure
+- Established a new OU structure within **Active Directory Users and Computers**.
+- Created three primary OUs:
+    - **_Users**: For administrative and standard user identities.
+    - **_Workstations**: For managing clients like USER-01.
+    - **_Servers**: For future member server expansion.
+
+![OU Structure]()
+
+### 3. Users & Admins
+- I set up two different types of accounts:
+- **Standard User (`u-jones / User Jones`)**
+- **Admin User (`a-mason / Admin Mason`)**: Added this account to the **Domain Admins** group.
+
+![Admin Group Membership]()
 
   
