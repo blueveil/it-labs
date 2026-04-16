@@ -106,13 +106,13 @@ Set up a basic Active Directory environment using Windows Server 2022 and connec
     - **_Workstations**: For managing clients like USER-01.
     - **_Servers**: For future member server expansion.
 
-![OU Structure]()
+![OU Structure](screenshots/12-ou-structure-dc-01.png)
 
 ### 3. Users & Admins
-- I set up two different types of accounts:
+- I set up two different accounts:
 - **Standard User (`u-jones / User Jones`)**
-- **Admin User (`a-mason / Admin Mason`)**: Added this account to the **Domain Admins** group.
+- **Admin User (`a-mason / Admin Mason`)**, added this account to the **Domain Admins** group.
 
-![Admin Group Membership]()
+![Admin User Group](screenshots/13-admin-user-group-dc-01.png)
 
   
