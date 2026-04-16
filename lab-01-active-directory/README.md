@@ -29,7 +29,7 @@ Set up a basic Active Directory environment using Windows Server 2022 and connec
 4. **Guest Additions:**
    - Mounted VBoxWindowsAdditions.iso and executed `VBoxWindowsAdditions-amd64.exe` on both machines to enable full driver support.
 
-## Phase 1: Operating System Deployment
+## Phase 1: OS Deployment
 - **DC-01:** Installed Windows Server 2022 Standard (Desktop Experience). Set Administrator password to `P@ssword123`.
 - **USER-01:** Installed Windows 10 Pro. 
   - Offline setup: Skipped internet connection (Limited Setup).
@@ -38,7 +38,7 @@ Set up a basic Active Directory environment using Windows Server 2022 and connec
 
 ![DC-01 Desktop](screenshots/02-desktop-dc-01.png) ![USER-01 Desktop](screenshots/02-desktop-user-01.png)
 
-## Phase 2: Host Identity & Network Connectivity
+## Phase 2: Network Setup
 ### 1. Host Renaming
 - Renamed Server to `DC-01`.
 - Renamed Client to `USER-01`.
@@ -66,7 +66,7 @@ Set up a basic Active Directory environment using Windows Server 2022 and connec
 
 ![Successful Ping Test](screenshots/06-ping-test-success-user-01.png)
 
-## Phase 3: Active Directory Domain Services (AD DS)
+## Phase 3: Install Active Directory 
 
 ### 1. Role Installation
 - Navigate to **Server Manager** -> **Manage** -> **Add Roles and Features**.
@@ -93,5 +93,8 @@ Set up a basic Active Directory environment using Windows Server 2022 and connec
 - Authenticated via the new domain administrator context: `JLAB\Administrator`.
 
 ![Domain Login Screen](screenshots/10-dc-login-screen-dc-01.png) ![Server Manager AD Active](screenshots/11-server-manager-ad-active-dc-01.png)
+
+## Phase 4: Basic Domain Setup
+(Coming soon.)
 
   
