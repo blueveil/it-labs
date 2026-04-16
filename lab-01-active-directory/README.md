@@ -83,7 +83,7 @@ Set up a basic Active Directory environment using Windows Server 2022 and connec
 ![New Forest Setup](screenshots/08-new-forest-setup-dc-01.png)
 
 ### 3. Prerequisites and Deployment
-- Ran the **Prerequisites Check* to ensure environment compatibility.
+- Ran the **Prerequisites Check** to ensure environment compatibility.
 - Confirmed "All prerequisite checks passed successfully" status.
 
 ![Prerquisites Check Passes](screenshots/09-prereq-check-passed-dc-01.png)
@@ -114,5 +114,29 @@ Set up a basic Active Directory environment using Windows Server 2022 and connec
 - **Admin User (`a-mason / Admin Mason`)**, added this account to the **Domain Admins** group.
 
 ![Admin User Group](screenshots/13-admin-user-group-dc-01.png)
+
+## Phase 5: Client Join (USER-01)
+
+### 1. Domain Membership Change
+- Changed the membership from a Workgroup to the **`jlab.local`** domain. I authenticated the join using the domain administrator credentials created in Phase 4.
+
+![Domain Join](screenshots/14-domain-join-user-01.png)
+
+## Phase 6: Verification
+
+### 1. Domain Authentication
+- After reboot, I logged into **USER-01** using the standard domain account (`JLAB\user1`).
+- Verified the identity with the `whoami` and `hostname` command.
+
+![Domain Identity Verification](screenshots/16-connectivity-test-user-01.png)
+
+### 2. Active Directory Object Management
+- On **DC-01**, I verified that **USER-01** appeared in the directory.
+- Moved the computer object from the default container into the **`_Workstations`** OU.
+
+![AD Management](screenshots/17-ad-verification-dc-01.png)
+
+---
+**Lab 01 Finished.**
 
   
