@@ -27,7 +27,7 @@ Set up a basic Active Directory environment using Windows Server 2022 and connec
 ![VirtualBox Network Configuration](screenshots/01-vbox-network-dc-01.png)
      
 4. **Guest Additions:**
-   - Mounted VBoxWindowsAdditions.iso and executed `VBoxWindowsAdditions-amd64.exe` on both machines to enable full driver support.
+   - Mounted VBoxWindowsAdditions.iso and executed `VBoxWindowsAdditions-amd64.exe` on both machines.
 
 ## Phase 1: OS Deployment
 - **DC-01:** Installed Windows Server 2022 Standard (Desktop Experience). Set Administrator password to `P@ssword123`.
@@ -125,12 +125,17 @@ Set up a basic Active Directory environment using Windows Server 2022 and connec
 ## Phase 6: Verification
 
 ### 1. Domain Authentication
-- After reboot, I logged into **USER-01** using the standard domain account (`JLAB\user1`).
-- Verified the identity with the `whoami` and `hostname` command.
+- After reboot, I verified the new login option for the **jlab.local** domain.
+- Logged into **USER-01** using the standard user account (`JLAB\u-jones`).
+
+![Domain Login Screen](screenshots/15-domain-login-user-01.png)
+
+### 2. Identity & Connectivity Verification
+- Verified the identity with the `whoami` and `hostname` command to ensure the session is domain-authenticated.
 
 ![Domain Identity Verification](screenshots/16-connectivity-test-user-01.png)
 
-### 2. Active Directory Object Management
+### 3. Active Directory Object Management
 - On **DC-01**, I verified that **USER-01** appeared in the directory.
 - Moved the computer object from the default container into the **`_Workstations`** OU.
 
@@ -138,5 +143,3 @@ Set up a basic Active Directory environment using Windows Server 2022 and connec
 
 ---
 **Lab 01 Finished.**
-
-  
