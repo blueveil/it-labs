@@ -54,14 +54,14 @@ Transform the basic domain into a simulated corporate network by setting up depa
 ## Phase 6: Verification
 
 ### 1. Navigation & Write Test
-- Logged into **USER-01** as the Sales user (`s-monroe`).
+- Logged into **USER-01** as the Sales user (`s-borne`).
 - Successfully browsed to `\\DC-01\_Shared` and entered the **Sales** folder.
 - Created `Test.txt` to prove write access works.
 
 ![Network Path Access](screenshots/05-network-path-user-01.png) ![Write Success](screenshots/06-sales-create-file-test-user-01.png)
 
 ### 2. Security Test (Negative Test)
-- Attempted to open the **HR** folder as the Sales user (`s-monroe`).
+- Attempted to open the **HR** folder as the Sales user (`s-borne`).
 - Successfully blocked with an "Access is Denied" popup.
 
 ![Access Denied Proof](screenshots/07-access-denied-hr-folder-sales-user-01.png)
