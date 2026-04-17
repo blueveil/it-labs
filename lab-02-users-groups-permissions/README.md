@@ -1,7 +1,7 @@
 # Lab 02 – Users, Groups, and Permissions
 
 ## Objective
-Transform the basic domain into a corporate network by setting up departmental OUs, creating users/groups, and configuring NTFS permissions to enforce the Principle of Least Privilege.
+Transform the basic domain into a simulated corporate network by setting up departmental OUs, creating users/groups, and configuring NTFS permissions to enforce the Principle of Least Privilege.
 
 ## Lab Setup / Environment
 - **DC-01 (Windows Server 2022)**
@@ -20,7 +20,7 @@ Transform the basic domain into a corporate network by setting up departmental O
 
 ## Phase 2: Users & Groups
 - Created departmental Security Groups: `IT_Admins`, `HR_Staff`, and `Sales_Team`.
-- Provisioned two users per OU (e.g., `s-monroe / Sales Monroe`). 
+- Added two users per OU (e.g., `s-monroe / Sales Monroe`). 
 - Set all passwords to `P@ssword123`.
 - Added the users to their respective groups so permissions can be managed at the group level.
 
@@ -31,7 +31,7 @@ Transform the basic domain into a corporate network by setting up departmental O
 - Enabled **Network Discovery** and started the **Function Discovery Publication** service to make the server visible.
 - **Sharing:** Set `_Shared` to Advanced Sharing. Permissions: `Everyone: Full Control` (so NTFS handles the actual security).
 
-## Phase 4: NTFS Permissions (The Lockdown)
+## Phase 4: NTFS Permissions
 - For each subfolder (`HR`, `IT`, `Sales`), I disabled inheritance and converted permissions to explicit.
 - **Lockdown:** Removed the `Users` group to block general access.
 - **Access:** Added the specific departmental group with **Modify** permissions.
@@ -40,7 +40,7 @@ Transform the basic domain into a corporate network by setting up departmental O
 
 ---
 
-## Phase 5: Troubleshooting & The "Hallway" Fix
+## Phase 5: Troubleshooting Access
 - **The Issue:** Logged into **USER-01** as `s-monroe` and tried to open `\\DC-01\_Shared`. I got an "Access Denied" error immediately.
 - **The Reason:** While the user had rights to the Sales *subfolder*, they didn't have permission to even see the root `_Shared` folder.
 
@@ -52,7 +52,7 @@ Transform the basic domain into a corporate network by setting up departmental O
 
 ## Phase 6: Verification
 
-### 1. Navigation & Success Test
+### 1. Navigation & Write Test
 - Logged into **USER-01** as the Sales user.
 - Successfully browsed to `\\DC-01\_Shared` and entered the **Sales** folder.
 - Created `Test.txt` to prove write access works.
