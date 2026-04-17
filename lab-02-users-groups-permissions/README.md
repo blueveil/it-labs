@@ -1,62 +1,76 @@
 # Lab 02 – Users, Groups, and Permissions
 
 ## Objective
-To transform the basic domain into a simulated corporate environment by implementing a departmental hierarchy, provisioning users, and enforcing the Principle of Least Privilege through NTFS permissions.
+To transform a basic domain into a functional corporate environment by implementing a departmental hierarchy, automating access via security groups, and enforcing the **Principle of Least Privilege (PoLP)** through granular NTFS permissions.
 
 ## Lab Setup / Environment
-- **DC-01: Domain Controller (jlab.local)**
-- **USER-01: Windows 10 Workstation**
-- **Goal:** Enforce the Principle of Least Privilege (PoLP) across HR, IT, and Sales.
+- **DC-01:** Windows Server 2022 (Domain Controller & File Server)
+- **USER-01:** Windows 10 Pro (Domain-joined Workstation)
+- **Scope:** Deployment of HR, IT, and Sales departmental structures and secure file shares.
 
 ---
 
 ## Phase 1: Organizational Structure (OUs)
-Established a departmental OU hierarchy under a primary `_Company` container within **Active Directory Users and Computers (ADUC)**.
-- Created the **`_Company`** root OU.
-- Created sub-OUs for **`IT`**, **`HR`**, and **`Sales`** to logically separate departmental objects.
+I established a logical hierarchy within **Active Directory Users and Computers (ADUC)** to manage departmental objects. 
+- Created a root OU named **`_Company`**.
+- Created sub-OUs for **`HR`**, **`IT`**, and **`Sales`**. This structure allows for targeted Group Policy application and administrative delegation.
 
 ![AD OU Structure](screenshots/01-ad-it-hr-sales-dc-01.png)
 
 ## Phase 2: User & Group Provisioning
-Implemented a "Groups-First" security model, ensuring that permissions are managed at the group level for scalability.
-1. **Security Groups:** Created `IT_Admins`, `HR_Staff`, and `Sales_Team` within their respective OUs.
-2. **User Creation:** Provisioned two users per department with a standard password policy.
-3. **Group Membership:** Assigned users to their specific departmental groups.
+Following industry best practices, I implemented group-based access control. Permissions are never assigned to individuals; they are assigned to groups.
+1. **Security Groups:** Created `HR_Staff`, `IT_Admins`, and `Sales_Team` (Global Security Groups).
+2. **User Accounts:** Created two users per department (e.g., `s-monroe`). All accounts were configured with a standard baseline password (`P@ssword123`).
+3. **Membership:** Users were nested into their respective departmental groups to automate permission inheritance.
 
 ![Group Membership](screenshots/02-group-membership-dc-01.png)
 
 ## Phase 3: File Server & Network Sharing
-Configured **DC-01** to act as a centralized file server.
-- **Services:** Enabled **Function Discovery Publication** and turned on **Network Discovery** to ensure the server was visible to clients.
-- **Root Share:** Created `C:\_Shared` and shared it as `_Shared`.
-- **Share Permissions:** Set **`Everyone: Full Control`** at the sharing level to allow the NTFS layer to handle granular security restrictions.
+I configured **DC-01** to serve as the organization's file host.
+1. **Network Services:** Enabled **Network Discovery** and **File and Printer Sharing**. Set the **Function Discovery Publication** service to Automatic to ensure server visibility on the network.
+2. **Directory Creation:** Created `C:\_Shared` on DC-01 with departmental subfolders: `HR`, `IT`, and `Sales`.
+3. **Sharing Layer:** Shared the `_Shared` folder with **Share Permissions** set to `Everyone: Full Control`. This hands off the actual "lockdown" responsibility to the NTFS Security layer.
 
 ## Phase 4: NTFS Permissions (The Lockdown)
-Applied the Principle of Least Privilege by hardening subfolders and managing inheritance.
-1. **Disabling Inheritance:** On each subfolder (`HR`, `IT`, `Sales`), inheritance was disabled and existing permissions were converted to explicit entries.
-2. **Departmental Access:** - Removed the default `Users (JLAB\Users)` group to block general domain access.
-   - Added specific departmental groups (e.g., `HR_Staff`) with **Modify** permissions.
-3. **The "Hallway" Permission:** Resolved a common access issue where users were blocked from navigating the root share. Added the `Users` group to the `_Shared` root folder with **"Read & Execute"** (This folder only) to allow navigation to departmental subfolders.
+To secure the data, I broke the default permission inheritance from the C: drive and manually defined access for each department.
 
-![NTFS Lockdown HR](screenshots/03-ntfs-lockdown-hr-dc-01.png) ![NTFS Lockdown IT](screenshots/03-ntfs-lockdown-it-dc-01.png) ![NTFS Lockdown Sales](screenshots/03-ntfs-lockdown-sales-dc-01.png)
+1. **Inheritance Break:** For each departmental folder, I disabled inheritance and converted existing permissions to explicit entries.
+2. **Access Control:** I removed the `Users (JLAB\Users)` group (which provides access to all domain users) and added only the relevant departmental group with **Modify** permissions.
 
-## Phase 5: Verification & Testing
-Validated the security model from **USER-01** by logging in as a Sales user (`s-monroe`).
+![NTFS HR Lockdown](screenshots/03-ntfs-lockdown-hr-dc-01.png)
+![NTFS IT Lockdown](screenshots/03-ntfs-lockdown-it-dc-01.png)
+![NTFS Sales Lockdown](screenshots/03-ntfs-lockdown-sales-dc-01.png)
 
-### 1. Root Access & Navigation
-Verified that the "Hallway" fix allowed the user to see the departmental folders at the root share without accessing forbidden content.
+---
 
-![Initial No Access Error](screenshots/04-no-access-shared-folder-user-01.png) ![Correct Network Path](screenshots/06-network-path-user-01.png)
+## 🛠️ Troubleshooting: The "Hallway" Access Gap
+During initial testing on **USER-01**, I logged in as a Sales user and attempted to reach `\\DC-01\_Shared`. Despite having full rights to the Sales subfolder, the user was met with a **"Network Error: Access is Denied"** at the root.
 
-### 2. Departmental Access (Success)
-Confirmed the Sales user could successfully read and write within the **Sales** folder.
+**The Discovery:** The users had permission to the "room" (Sales folder) but didn't have permission to walk through the "hallway" (the root `_Shared` folder) to get there.
 
-![Sales Write Success](screenshots/05-sales-create-file-test-user-01.png)
+![Initial Root Access Error](screenshots/04-no-access-shared-folder-user-01.png)
 
-### 3. Cross-Departmental Security (Failure)
-Confirmed that the same Sales user was strictly forbidden from entering the **HR** folder, proving that NTFS permissions correctly enforced departmental boundaries.
+**The Fix:** On **DC-01**, I modified the NTFS permissions of the root `_Shared` folder. I added the **`Users`** group with **"Read & Execute"** permissions but applied it to **"This folder only."** This allowed users to see the directory list without gaining any rights to folders they didn't belong to.
 
-![Access Denied Proof](screenshots/07-access-denied-hr-folder-sales-user-01.png)
+---
+
+## Phase 5: Verification (The Proof)
+Final verification was performed on **USER-01** using the `s-monroe` (Sales) account.
+
+### 1. Navigation Success
+With the "Hallway Fix" applied, the user can now successfully browse to the root share and see the available departmental folders.
+
+![Network Path Verification](screenshots/06-network-path-user-01.png)
+
+### 2. Authorized Access (Positive Test)
+The Sales user successfully entered the **Sales** folder and created `Test.txt`. This confirms the **Modify** permission is functioning correctly.
+
+![Authorized Write Success](screenshots/05-sales-create-file-test-user-01.png)
+
+### 3. Unauthorized Access (Negative Test)
+The Sales user attempted to enter the **HR** folder. The system strictly enforced the PoLP and returned an **"Access is Denied"** message, confirming the security boundary is intact.
+
+![Unauthorized Access Denied](screenshots/07-access-denied-hr-folder-sales-user-01.png)
 
 ---
 **Lab 02 Finished.**
