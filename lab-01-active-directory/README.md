@@ -6,15 +6,15 @@ Set up a basic Active Directory environment using Windows Server 2022 and connec
 ## Lab Setup / Environment
 - **DC-01 (Windows Server 2022)**
   - 2 vCPUs / 4GB RAM
-  - Adapter 1: NAT
-  - Adapter 2: Internal Network (lab-net)
+  - Adapter 1: `NAT`
+  - Adapter 2: `Internal Network (lab-net)`
 - **USER-01 (Windows 10 Pro)**
   - 2 vCPUs / 4GB RAM
-  - Adapter 1: Internal Network (lab-net)
+  - Adapter 1: `Internal Network (lab-net)`
 
 ---
 
-## Phase 0: VM Setup & VirtualBox Configuration
+## Phase 1: VM Setup & VirtualBox Configuration
 1. **VM Creation:**
    - DC-01: Windows Server 2022 ISO, 4GB RAM, 2 CPU cores.
    - USER-01: Windows 10 ISO, 4GB RAM, 2 CPU cores.
@@ -29,7 +29,7 @@ Set up a basic Active Directory environment using Windows Server 2022 and connec
 4. **Guest Additions:**
    - Mounted VBoxWindowsAdditions.iso and executed `VBoxWindowsAdditions-amd64.exe` on both machines.
 
-## Phase 1: OS Deployment
+## Phase 2: OS Deployment
 - **DC-01:** Installed Windows Server 2022 Standard (Desktop Experience). Set Administrator password to `P@ssword123`.
 - **USER-01:** Installed Windows 10 Pro. 
   - Offline setup: Skipped internet connection (Limited Setup).
@@ -38,7 +38,7 @@ Set up a basic Active Directory environment using Windows Server 2022 and connec
 
 ![DC-01 Desktop](screenshots/02-desktop-dc-01.png) ![USER-01 Desktop](screenshots/02-desktop-user-01.png)
 
-## Phase 2: Network Setup
+## Phase 3: Network Setup
 ### 1. Host Renaming
 - Renamed Server to `DC-01`.
 - Renamed Client to `USER-01`.
@@ -66,7 +66,7 @@ Set up a basic Active Directory environment using Windows Server 2022 and connec
 
 ![Successful Ping Test](screenshots/06-ping-test-success-user-01.png)
 
-## Phase 3: Install Active Directory 
+## Phase 4: Install Active Directory 
 
 ### 1. Role Installation
 - Navigate to **Server Manager** -> **Manage** -> **Add Roles and Features**.
@@ -94,7 +94,7 @@ Set up a basic Active Directory environment using Windows Server 2022 and connec
 
 ![Domain Login Screen](screenshots/10-dc-login-screen-dc-01.png) ![Server Manager AD Active](screenshots/11-server-manager-ad-active-dc-01.png)
 
-## Phase 4: Domain Setup (OUs & Users)
+## Phase 5: Domain Setup (OUs & Users)
 
 ### 1. DNS and Network Optimization
 - After promotion, I updated DC-01 IPv4 configuration to point to it's own static IP (`192.168.10.10`) for DNS resolution.
@@ -115,14 +115,14 @@ Set up a basic Active Directory environment using Windows Server 2022 and connec
 
 ![Admin User Group](screenshots/13-admin-user-group-dc-01.png)
 
-## Phase 5: Client Join (USER-01)
+## Phase 6: Client Join (USER-01)
 
 ### 1. Domain Membership Change
 - Changed the membership from a Workgroup to the **`jlab.local`** domain. I authenticated the join using the domain administrator credentials created in Phase 4.
 
 ![Domain Join](screenshots/14-domain-join-user-01.png)
 
-## Phase 6: Verification
+## Phase 7: Verification
 
 ### 1. Domain Authentication
 - After reboot, I verified the new login option for the **jlab.local** domain.
