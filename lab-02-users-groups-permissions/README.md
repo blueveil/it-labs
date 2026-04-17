@@ -21,7 +21,7 @@ Transform the basic domain into a simulated corporate network by setting up depa
 
 ## Phase 2: Users & Groups
 - Created departmental Security Groups: `IT_Admins`, `HR_Staff`, and `Sales_Team`.
-- Added two users per OU (e.g., `s-monroe / Sales Monroe`). 
+- Added two users per OU (e.g., `s-monroe / Sales Monroe`, `hr-giger / H.R. Giger`). 
 - Set all passwords to `P@ssword123`.
 - Added the users to their respective groups so permissions can be managed at the group level.
 
