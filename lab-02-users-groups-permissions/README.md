@@ -6,10 +6,11 @@ Transform the basic domain into a simulated corporate network by setting up depa
 ## Lab Setup / Environment
 - **DC-01 (Windows Server 2022)**
   - Domain Controller & File Server
+  - `192.168.10.10`
 - **USER-01 (Windows 10 Pro)**
   - Domain Client
-- **Goal:** Ensure HR, IT, and Sales can only access their own data.
-
+  - `192.168.10.20`
+  
 ---
 
 ## Phase 1: Organizational Unit (OU) Structure
