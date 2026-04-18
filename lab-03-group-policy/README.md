@@ -9,6 +9,7 @@ Learn centralized control of users and machines using Group Policy in a Windows 
   - IP: `192.168.10.10`
 - **USER-01 (Windows 10 Pro)**
   - Domain Client (Testing environment)
+  - IP: `192.168.10.20`
   - Logged in as: `JLAB\s-borne` (Sales Dept)
 
 ---
@@ -20,11 +21,12 @@ Learn centralized control of users and machines using Group Policy in a Windows 
 
 ![GPMC Overview](screenshots/01-gpmc-dc-01.png)
 
-## Phase 2: Domain-Wide Password Policy
+## Phase 2: Password Policy (Domain Level)
 - **Requirement:** Password policies must be set at the Domain level to affect domain accounts.
 - Edited the **Default Domain Policy**.
 - **Path:** `Computer Configuration > Policies > Windows Settings > Security Settings > Account Policies > Password Policy`
-- **Settings:** - Minimum password length: **10 characters**
+- **Settings:**
+  - Minimum password length: **10 characters**
   - Password must meet complexity requirements: **Enabled**
 
 ![Password Policy Config](screenshots/02-password-policy-dc-01.png)
@@ -40,7 +42,7 @@ Learn centralized control of users and machines using Group Policy in a Windows 
 ![Login Banner Settings](screenshots/03-gpo-login-banner-dc-01.png)
 
 ## Phase 4: Endpoint Hardening (Control Panel)
-- Created GPO: `USER_Restrict_ControlPanel`.
+- Created a new GPO: `USER_Restrict_ControlPanel`.
 - **Path:** `User Configuration > Policies > Administrative Templates > Control Panel`.
 - **Action:** Enabled **"Prohibit access to Control Panel and PC settings"**.
 - **Linking:** Linked to the **`_Company`** OU to restrict all staff users.
@@ -48,7 +50,7 @@ Learn centralized control of users and machines using Group Policy in a Windows 
 ![Control Panel Restriction](screenshots/04-gpo-restrict-control-panel.png)
 
 ## Phase 5: Network Drive Mapping
-- Created GPO: `USER_Drive_Maps`.
+- Created a new GPO: `USER_Drive_Maps`.
 - **Path:** `User Configuration > Preferences > Windows Settings > Drive Maps`.
 - **Configuration:** - **Action:** Create | **Location:** `\\DC-01\Sales` | **Drive Letter:** `S:` | **Label:** `Sales Data`.
 - **Linking:** Linked to the **`_Company`** OU.
@@ -56,7 +58,7 @@ Learn centralized control of users and machines using Group Policy in a Windows 
 ![Drive Map Configuration](screenshots/05-drive-map-new-dc-01.png)
 
 ## Phase 6: Screen Lock Timeout
-- Created `SEC_Screen_Lock`. 
+- Created a new GPO: `SEC_Screen_Lock`. 
 - **Settings:** Configured Screen Saver to be **Enabled**, **Password Protected**, and set a timeout of **600 seconds**.
 - Linked to the **`_Company`** OU.
 
@@ -83,7 +85,7 @@ Learn centralized control of users and machines using Group Policy in a Windows 
 ### 2. Wallpaper Extension Fix
 - **Issue:** Wallpaper failed to appear initially on **USER-01**.
 
-![Incorrect User Wallpaper](09-incorrect-user-wallpaper-dc-01.png)
+![Incorrect User Wallpaper](screenshots/09-incorrect-user-wallpaper-dc-01.png)
 
 - **Discovery:** Verified the GPO path was pointing to `.jpg` while the actual source file in the Public share was a `.png`.
 - **Fix:** Corrected the file extension in the GPO setting to `\\DC-01\Public\USER_Wallpaper.png`.
