@@ -8,4 +8,5 @@ This repo contains my IT lab work using VirtualBox.
 
 ## Labs
 * Lab 1: Setup & Active Directory
-* Lab 2: (Coming Soon)
+* Lab 2: User Groups & Permissions
+* Lab 3: Group Policy
