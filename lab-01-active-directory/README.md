@@ -1,137 +1,102 @@
-# Lab 01 – Active Directory
+# Lab 01 – Active Directory | Building a Corporate Domain Foundation
 
 ## Objective
-The goal of this lab was to establish a functional identity management system from scratch. This involved deploying a Windows Server 2022 Domain Controller (DC) and successfully integrating a Windows 10 workstation into the new domain environment.
+The goal of this lab was to build a secure, functional corporate network environment from scratch. By deploying a Windows Server 2022 Domain Controller and integrating a Windows 10 workstation, I established a centralized identity management system. This project demonstrates my ability to handle core infrastructure tasks: networking, server roles, and directory services.
 
 ## Lab Setup / Environment
-* **Hypervisor:** VirtualBox
-* **Domain Controller (DC-01):** Windows Server 2022 | 2 vCPUs | 4GB RAM
-* **Client Workstation (USER-01):** Windows 10 Pro | 2 vCPUs | 4GB RAM
-* **Network:** Isolated Internal Network (`lab-net`) with DC-01 acting as the primary DNS server.
+- **DC-01: Domain Controller (Windows Server 2022)**
+  - 2 vCPUs / 4GB RAM
+  - NIC 1: `NAT`
+  - NIC 2 2: `Internal Network (lab-net)`
+- **USER-01: Workstation (Windows 10 Pro)**
+  - 2 vCPUs / 4GB RAM
+  - NIC: `Internal Network (lab-net)`
+- **Domain:** `jlab.local`
 ---
 ## Phase 1: VM Setup & VirtualBox Configuration
-1. **VM Creation:**
-   - DC-01: Windows Server 2022 ISO, 4GB RAM, 2 CPU cores.
-   - USER-01: Windows 10 ISO, 4GB RAM, 2 CPU cores.
-2. **General Settings:**
-   - Enabled Shared Clipboard and Drag-and-Drop (Bidirectional) for both VMs.
+I initialized the virtual machines using VirtualBox, ensuring Guest Additions were installed for better driver support and performance.
+1. **VM Creation:** Configured DC-01 and USER-01 with 4GB RAM and 2 CPU cores to ensure smooth OS performance.
+2. **General Settings:** Enabled Shared Clipboard and Drag-and-Drop (Bidirectional) for both VMs to facilitate efficient administration.
 3. **Network Configuration:**
-   - **DC-01:** Adapter 1 set to NAT. Adapter 2 set to Internal Network (Name: `lab-net`).
-   - **USER-01:** Adapter 1 set to Internal Network (Name: `lab-net`).
-4. **Guest Additions:**
-   - Mounted VBoxWindowsAdditions.iso and executed `VBoxWindowsAdditions-amd64.exe` on both machines.
+    - **DC-01:** Adapter 1 (NAT) for internet; Adapter 2 (Internal Network: `lab-net`).
+    - **USER-01:** Adapter 1 (Internal Network: `lab-net`).
+5. **Guest Additions:** Mounted `VBoxWindowsAdditions.iso` and executed `VBoxWindowsAdditions-amd64.exe` on both to ensure driver stability.
 
-## Phase 2: Domain Promotion & Identity Setup
-- **DC-01:** Installed Windows Server 2022 Standard (Desktop Experience). Set Administrator password to `P@ssword123`.
-- **USER-01:** Installed Windows 10 Pro. 
-  - Offline setup: Skipped internet connection (Limited Setup).
-  - User: `j-lanes` 
-  - Privacy: Disabled telemetry, diagnostic data, and Cortana.
+![VirtualBox Network Configuration](screenshots/01-vbox-network-dc-01.png)
 
-![DC-01 Desktop](screenshots/02-desktop-dc-01.png) ![USER-01 Desktop](screenshots/02-desktop-user-01.png)
+---
 
-## Phase 3: Network Setup
-### 1. Host Renaming
-- Renamed Server to `DC-01`.
-- Renamed Client to `USER-01`.
-- Performed system restarts to apply changes.
+## Phase 2: OS Deployment & Hardening
+I focused on a clean, professional OS install, removing consumer-grade bloatware and securing the local accounts.
+* **DC-01:** Installed Windows Server 2022 Standard (Desktop Experience). 
+* **USER-01:** Installed Windows 10 Pro. 
+    * **Privacy First:** Performed an offline setup to skip Microsoft Account requirements, and disabled telemetry, diagnostic data, and Cortana to simulate a privacy-conscious corporate image.
+    * **Local User:** Created initial local admin `j-lanes`.
+ 
+---
 
-### 2. Static IP Assignment (DC-01) & (USER-01)
-- Navigated to `ncpa.cpl` to configure IPv4 properties.
-- **DC-01:** IP `192.168.10.10` | DNS `127.0.0.1`
-- **USER-01:** IP `192.168.10.20` | DNS `192.168.10.10`
+## Phase 3: Network Setup & Verification
+In an Active Directory environment, DNS is the most critical component. I configured static IP addresses via `ncpa.cpl` to ensure stability across the network.
 
-![DC-01 IPv4 Config](screenshots/03-ipv4-config-dc-01.png) ![USER-01 IPv4 Config](screenshots/03-ipv4-config-user-01.png)
-
-### 3. IP Verification
-- Verified active configurations via `ipconfig`.
-
-![DC-01 ipconfig](screenshots/04-ipconfig-dc-01.png) ![USER-01 ipconfig](screenshots/04-ipconfig-user-01.png)
-
-### 4. Firewall & Verification
-- **DC-01:** Modified Windows Defender Firewall Inbound Rules.
-  - Enabled: `File and Printer Sharing (Echo Request - ICMPv4-In)`.
+1. **Host Renaming:** Renamed hosts to `DC-01` and `USER-01` to maintain professional naming conventions.
+2. **Static IP Assignment:**
+    - **DC-01:** IP `192.168.10.10` | DNS `127.0.0.1` (Points to itself for AD role setup).
+    - **USER-01:** IP `192.168.10.20` | DNS `192.168.10.10` (Points to the DC for name resolution).
+3. **Firewall Management:**<br>
+    - Modified Windows Defender Firewall Inbound Rules on DC-01 to enable `File and Printer Sharing (Echo Request - ICMPv4-In)`.
 
 ![Firewall Rule](screenshots/05-firewall-icmp-rule-dc-01.png) 
-    
-- **Validation:** Successfully verified connectivity by pinging `192.168.10.10` from the `USER-01` Command Prompt.
+   
+5. **Verification:** Confirmed a successful ping from the workstation to the server, verifying the physical and logical link.
 
 ![Successful Ping Test](screenshots/06-ping-test-success-user-01.png)
 
+---
+
 ## Phase 4: Install Active Directory 
+This phase transformed a standalone server into the "brain" of the network.
 
-### 1. Role Installation
-- Navigate to **Server Manager** -> **Manage** -> **Add Roles and Features**.
-- Selected **Active Directory Domain Services** and **DNS Server** roles.
-- Confirmed the addition of required management features and initiated the installation process.
+1. **Role Installation:** Navigated to **Server Manager** -> **Add Roles and Features** to install **AD DS** and **DNS Server** roles.
+2. **Domain Controller Promotion:** * Selected **Add a new forest** for `jlab.local`. 
+    - Set functional levels to **Windows Server 2016** to maintain compatibility while keeping modern security features active.
+3. **After Promotion Status:** Confirmed healthy service status and authenticated via the new domain context: `JLAB\Administrator`.
 
-![AD DS Role Selection](screenshots/07-ad-ds-role-selection-dc-01.png)
+![Server Manager AD Active](screenshots/11-server-manager-ad-active-dc-01.png)
 
-### 2. Domain Controller Promotion
-- Accessed the **Deployment Configuration** through the yellow Server Manager notification flag.
-- Selected **Add a new forest** and set the root domain name as `jlab.local`.
-- Configured Domain Controller Options and Functional Level of **Windows Server 2016** and set the DSRM password.
+---
 
-![New Forest Setup](screenshots/08-new-forest-setup-dc-01.png)
+## Phase 5: Directory Structure & User Management
+A flat directory is difficult to manage. I implemented a professional Organizational Unit (OU) structure to allow for future Group Policy (GPO) targeting.
 
-### 3. Prerequisites and Deployment
-- Ran the **Prerequisites Check** to ensure environment compatibility.
-- Confirmed "All prerequisite checks passed successfully" status.
-
-![Prerquisites Check Passes](screenshots/09-prereq-check-passed-dc-01.png)
-
-### 4. After Promotion Status
-- Confirmed that the server is successfully operating as a Domain Controller by validating the **AD DS** and **DNS** service status.
-- Authenticated via the new domain administrator context: `JLAB\Administrator`.
-
-![Domain Login Screen](screenshots/10-dc-login-screen-dc-01.png) ![Server Manager AD Active](screenshots/11-server-manager-ad-active-dc-01.png)
-
-## Phase 5: Domain Setup (OUs & Users)
-
-### 1. DNS and Network Optimization
-- After promotion, I updated DC-01 IPv4 configuration to point to it's own static IP (`192.168.10.10`) for DNS resolution.
-
-### 2. Organizational Unit (OU) Structure
-- Established a new OU structure within **Active Directory Users and Computers**.
-- Created three primary OUs:
-    - **_Users**: For administrative and standard user identities.
-    - **_Workstations**: For managing clients like USER-01.
-    - **_Servers**: For future member server expansion.
+* **OU Setup:** Established `_Users`, `_Workstations`, and `_Servers`.
 
 ![OU Structure](screenshots/12-ou-structure-dc-01.png)
-
-### 3. Users & Admins
-- I set up two different accounts:
-- **Standard User (`u-jones / User Jones`)**
-- **Admin User (`a-mason / Admin Mason`)**, added this account to the **Domain Admins** group.
+  
+* **Identity Management:**
+    - **Standard User:** `u-jones` (User Jones) for daily tasks.
+    - **Admin User:** `a-mason` (Admin Mason), added to the **Domain Admins** group.
+    - *Note: I purposely created separate accounts to follow the Principle of Least Privilege, avoiding the use of the default Administrator account for daily lab tasks.*
 
 ![Admin User Group](screenshots/13-admin-user-group-dc-01.png)
 
-## Phase 6: Client Join (USER-01)
+---
 
-### 1. Domain Membership Change
-- Changed the membership from a Workgroup to the **`jlab.local`** domain. I authenticated the join using the domain administrator credentials created in Phase 4.
+## Phase 6: Domain Integration & Identity Validation
+The final stage was bringing the workstation into the environment and confirming that the centralized identity system was functioning as intended.
 
-![Domain Join](screenshots/14-domain-join-user-01.png)
+1. **Domain Membership:** I transitioned `USER-01` from a Workgroup to the `jlab.local` domain. I used the `a-mason` administrative credentials to authorize the join, simulating a standard IT deployment.
+2. **Cross-Platform Authentication:** * After a reboot, I logged into the Windows 10 workstation using the standard user account (`JLAB\u-jones`).
+    - **Validation:** I used the `whoami` command to confirm the domain context and `set user` to verify that `DC-01` was the authenticating logon server.
+3. **Directory Cleanup:** On the Domain Controller, I verified the presence of the new computer object. I moved `USER-01` from the default 'Computers' container into the `_Workstations` OU to prepare the environment for future Group Policy (GPO) deployment.
 
-## Phase 7: Verification
-
-### 1. Domain Authentication
-- After reboot, I verified the new login option for the **jlab.local** domain.
-- Logged into **USER-01** using the standard user account (`JLAB\u-jones`).
-
-![Domain Login Screen](screenshots/15-domain-login-user-01.png)
-
-### 2. Identity & Connectivity Verification
-- Verified the identity with the `whoami` and `hostname` command to ensure the session is domain-authenticated.
-
-![Domain Identity Verification](screenshots/16-connectivity-test-user-01.png)
-
-### 3. Active Directory Object Management
-- On **DC-01**, I verified that **USER-01** appeared in the directory.
-- Moved the computer object from the default container into the **`_Workstations`** OU.
-
-![AD Management](screenshots/17-ad-verification-dc-01.png)
+![Domain Authentication](screenshots/15-domain-login-user-01.png)
+![AD Management & OU Organization](screenshots/17-ad-verification-dc-01.png)
 
 ---
+
+## Outcome & Key Takeaways
+This lab successfully established a baseline corporate infrastructure. I learned that meticulous DNS configuration is the difference between a seamless domain join and a failed one. This foundation is now ready for more advanced tasks like Group Policy implementation, security auditing, and member server expansion.
+
+---
+
 **Lab 01 Finished.**
