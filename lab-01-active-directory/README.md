@@ -1,19 +1,14 @@
 # Lab 01 – Active Directory
 
 ## Objective
-Set up a basic Active Directory environment using Windows Server 2022 and connect a Windows 10 client to simulate a company network.
+The goal of this lab was to establish a functional identity management system from scratch. This involved deploying a Windows Server 2022 Domain Controller (DC) and successfully integrating a Windows 10 workstation into the new domain environment.
 
 ## Lab Setup / Environment
-- **DC-01 (Windows Server 2022)**
-  - 2 vCPUs / 4GB RAM
-  - Adapter 1: `NAT`
-  - Adapter 2: `Internal Network (lab-net)`
-- **USER-01 (Windows 10 Pro)**
-  - 2 vCPUs / 4GB RAM
-  - Adapter 1: `Internal Network (lab-net)`
-
+* **Hypervisor:** VirtualBox
+* **Domain Controller (DC-01):** Windows Server 2022 | 2 vCPUs | 4GB RAM
+* **Client Workstation (USER-01):** Windows 10 Pro | 2 vCPUs | 4GB RAM
+* **Network:** Isolated Internal Network (`lab-net`) with DC-01 acting as the primary DNS server.
 ---
-
 ## Phase 1: VM Setup & VirtualBox Configuration
 1. **VM Creation:**
    - DC-01: Windows Server 2022 ISO, 4GB RAM, 2 CPU cores.
@@ -23,13 +18,10 @@ Set up a basic Active Directory environment using Windows Server 2022 and connec
 3. **Network Configuration:**
    - **DC-01:** Adapter 1 set to NAT. Adapter 2 set to Internal Network (Name: `lab-net`).
    - **USER-01:** Adapter 1 set to Internal Network (Name: `lab-net`).
-
-![VirtualBox Network Configuration](screenshots/01-vbox-network-dc-01.png)
-     
 4. **Guest Additions:**
    - Mounted VBoxWindowsAdditions.iso and executed `VBoxWindowsAdditions-amd64.exe` on both machines.
 
-## Phase 2: OS Deployment
+## Phase 2: Domain Promotion & Identity Setup
 - **DC-01:** Installed Windows Server 2022 Standard (Desktop Experience). Set Administrator password to `P@ssword123`.
 - **USER-01:** Installed Windows 10 Pro. 
   - Offline setup: Skipped internet connection (Limited Setup).
