@@ -12,7 +12,9 @@ The goal of this lab was to build a secure, functional corporate network environ
   - 2 vCPUs / 4GB RAM
   - NIC: `Internal Network (lab-net)`
 - **Domain:** `jlab.local`
+
 ---
+
 ## Phase 1: VM Setup & VirtualBox Configuration
 I initialized the virtual machines using VirtualBox, ensuring Guest Additions were installed for better driver support and performance.
 1. **VM Creation:** Configured DC-01 and USER-01 with 4GB RAM and 2 CPU cores to ensure smooth OS performance.
