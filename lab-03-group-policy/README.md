@@ -10,7 +10,7 @@ Learn centralized control of users and machines using Group Policy in a Windows 
 - **USER-01 (Windows 10 Pro)**
   - Domain Client (Testing environment)
   - IP: `192.168.10.20`
-  - Logged in as: `JLAB\s-borne` (Sales Dept)
+  - Logged in as: `JLAB\s-borne` (Sales Team)
 
 ---
 
