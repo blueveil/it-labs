@@ -7,6 +7,7 @@ This repo contains my IT lab work using VirtualBox.
 - Build hands-on IT skills
 
 ## Labs
-* Lab 1: Setup & Active Directory
-* Lab 2: User Groups & Permissions
-* Lab 3: Group Policy
+* Lab 01: Setup & Active Directory
+* Lab 02: User Groups & Permissions
+* Lab 03: Group Policy
+* Lab 04: Network Automation
