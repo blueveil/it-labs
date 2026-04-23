@@ -22,7 +22,7 @@ I initialized the virtual machines using VirtualBox, ensuring Guest Additions we
 3. **Network Configuration:**
     - **DC-01:** Adapter 1 (NAT) for internet; Adapter 2 (Internal Network: `lab-net`).
     - **USER-01:** Adapter 1 (Internal Network: `lab-net`).
-5. **Guest Additions:** Mounted `VBoxWindowsAdditions.iso` and executed `VBoxWindowsAdditions-amd64.exe` on both to ensure driver stability.
+4. **Guest Additions:** Mounted `VBoxWindowsAdditions.iso` and executed `VBoxWindowsAdditions-amd64.exe` on both to ensure driver stability.
 
 ![VirtualBox Network Configuration](screenshots/01-vbox-network-dc-01.png)
 
@@ -44,12 +44,12 @@ In an Active Directory environment, DNS is the most critical component. I config
 2. **Static IP Assignment:**
     - **DC-01:** IP `192.168.10.10` | DNS `127.0.0.1` (Points to itself for AD role setup).
     - **USER-01:** IP `192.168.10.20` | DNS `192.168.10.10` (Points to the DC for name resolution).
-3. **Firewall Management:**<br>
-    - Modified Windows Defender Firewall Inbound Rules on DC-01 to enable `File and Printer Sharing (Echo Request - ICMPv4-In)`.
+3. **Firewall Management:**
+    Modified Windows Defender Firewall Inbound Rules on DC-01 to enable `File and Printer Sharing (Echo Request - ICMPv4-In)`.
 
 ![Firewall Rule](screenshots/05-firewall-icmp-rule-dc-01.png) 
    
-5. **Verification:** Confirmed a successful ping from the workstation to the server, verifying the physical and logical link.
+4. **Verification:** Confirmed a successful ping from the workstation to the server, verifying the physical and logical link.
 
 ![Successful Ping Test](screenshots/06-ping-test-success-user-01.png)
 
