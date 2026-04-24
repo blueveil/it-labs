@@ -19,7 +19,7 @@ Learn centralized control of users and machines using Group Policy in a Windows 
 - Expanded the forest and domain to reveal the OU structure created in Lab 02.
 - **Note:** Group Policy Objects are created in the "Group Policy Objects" folder (the vault) before being linked to specific OUs.
 
-![GPMC Overview](lab-03-group-policy/screenshots/01-gpmc-dc-01.png)
+![GPMC Overview](/lab-03-group-policy/screenshots/01-gpmc-dc-01.png)
 
 ## Phase 2: Password Policy (Domain Level)
 - **Requirement:** Password policies must be set at the Domain level to affect domain accounts.
