@@ -6,11 +6,9 @@ The goal of this lab was to transform a flat Active Directory environment into a
 
 ## Lab Setup / Environment
 - **DC-01 (Windows Server 2022: Domain Controller & File Server**
-  - OS: Windows Server 2022
   - IP: `192.168.10.10`
   - Roles: AD DS, DNS, File & Storage Services
-- **USER-01 (Windows 10 Pro): Workstation**
-  - OS: Windows 10 Pro
+- **USER-01 (Windows 10 Pro): Domain Client**
   - IP: `192.168.10.20`
 - **Domain:** `jlab.local`
 
