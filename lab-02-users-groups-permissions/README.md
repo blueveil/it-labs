@@ -74,7 +74,7 @@ To validate the security posture, I performed both positive and negative testing
 ---
 
 ## Outcome & Key Takeaways
-This lab reinforced the importance of **NTFS Inheritance** and the **AGP** method. I successfully demonstrated how to secure sensitive corporate data while maintaining a functional user experience. Key takeaway: Security is a balance—denying all access is easy, but configuring "Traversal Rights" ensures that security doesn't break usability.
+This lab reinforced the importance of **NTFS Inheritance** and the **AGP** method. I successfully demonstrated how to secure sensitive corporate data while maintaining a functional user experience. Key takeaway: Security is a balance. Denying all access is easy, but configuring "Traversal Rights" ensures that security doesn't break usability.
 
 ---
 
