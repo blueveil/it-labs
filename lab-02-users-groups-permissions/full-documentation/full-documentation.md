@@ -4,12 +4,14 @@
 Transform the basic domain into a simulated corporate network by setting up departmental OUs, creating users/groups, and configuring NTFS permissions to enforce the Principle of Least Privilege.
 
 ## Lab Setup / Environment
-- **DC-01 (Windows Server 2022)**
-  - Domain Controller & File Server
-  - `192.168.10.10`
-- **USER-01 (Windows 10 Pro)**
-  - Domain Client
-  - `192.168.10.20`
+- **DC-01 (Windows Server 2022: Domain Controller & File Server**
+  - OS: Windows Server 2022
+  - IP: `192.168.10.10`
+  - Roles: AD DS, DNS, File & Storage Services
+- **USER-01 (Windows 10 Pro): Workstation**
+  - OS: Windows 10 Pro
+  - IP: `192.168.10.20`
+- **Domain:** `jlab.local`
   
 ---
 
