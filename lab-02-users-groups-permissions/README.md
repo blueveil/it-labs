@@ -1,16 +1,17 @@
-
 # Lab 02 – Users, Groups, and Permissions | Implementing Least Privilege
 
 ## Objective
 The goal of this lab was to transform a flat Active Directory environment into a simulated corporate hierarchy. By establishing departmental Organizational Units (OUs), managing security groups, and configuring complex NTFS permissions, I implemented a "Zero Trust" approach to file sharing. This project demonstrates proficiency in identity management and securing data at rest.
 
 ## Lab Setup / Environment
-- **DC-01 (Windows Server 2022: Domain Controller & File Server**
+- **DC-01: Domain Controller & File Server**
+  - OS: Windows Server 2022
   - IP: `192.168.10.10`
   - Roles: AD DS, DNS, File & Storage Services
-- **USER-01 (Windows 10 Pro): Domain Client**
+- **USER-01: Workstation**
+  - OS: Windows 10 Pro
   - IP: `192.168.10.20`
-- **Domain:** `jlab.local`
+  - Context: Domain-joined to `jlab.local`
 
 ---
 
@@ -44,19 +45,21 @@ I configured a centralized file repository on **DC-01** designed for departmenta
 ---
 
 ## Phase 4: NTFS Hardening & Inheritance
-This phase focused on the "Principle of Least Privilege" by breaking permission inheritance.
-- **Explicit Permissions:** Disabled inheritance on departmental folders to prevent "Users" or "Authenticated Users" from viewing sensitive data.
-- **Administrative Lockdown:** Removed the default `Users` group and explicitly added only the relevant departmental Security Group with **Modify** rights.
+This phase focused on the "Principle of Least Privilege" by breaking permission inheritance to prevent "permission creep."
+- **Explicit Permissions:** Disabled inheritance via `Advanced Security Settings` and converted existing permissions to explicit.
+- **Administrative Lockdown:** Removed the default `Users` group to block general access and added the specific departmental Security Group with **Modify** rights.
 
 ![HR Lockdown](screenshots/03-ntfs-lockdown-hr-dc-01.png)
 
 ---
 
 ## Phase 5: Troubleshooting Traversal Rights
-During testing, I encountered a common real-world "Access Denied" scenario:
-- **The Issue:** Users had permissions for their subfolders (e.g., `\Sales`) but could not reach the root share (`\_Shared`).
-- **The Root Cause:** The users lacked "Read" permissions at the root level, preventing them from traversing the directory tree.
-- **The Solution:** I applied the `Users` group to the `_Shared` folder with **Read & Execute** permissions, scoped strictly to **"This folder only."** This allowed users to "pass through" the root to reach their authorized department folders without seeing the contents of others.
+During testing, I encountered a "permission paradox" where users had explicit rights to their sub-folders but were blocked at the root level of the share.
+
+| Issue | Root Cause | Resolution |
+| :--- | :--- | :--- |
+| **"Access Denied" at Root** | Users lacked permissions to navigate through `\\DC-01\_Shared`. | Added the **Users** group to the root folder with **Read & Execute** permissions. |
+| **Data Visibility Risk** | Standard Read access would allow users to see all other folder names. | Scoped the permission to **"This folder only"** via Advanced NTFS settings to allow pass-through access without visibility into other OUs. |
 
 ---
 
@@ -72,7 +75,7 @@ To validate the security posture, I performed both positive and negative testing
 ---
 
 ## Outcome & Key Takeaways
-This lab reinforced the importance of **NTFS Inheritance** and the **AGP** method. I successfully demonstrated how to secure sensitive corporate data while maintaining a functional user experience. Key takeaway: Security is a balance. Denying all access is easy, but configuring "Traversal Rights" ensures that security doesn't break usability.
+This lab successfully demonstrated the importance of **NTFS Inheritance** and the **AGP** method. I learned that security is a balance: denying all access is easy, but configuring "Traversal Rights" ensures that security doesn't break usability. This foundation is now prepared for automated management via Group Policy.
 
 ---
 
