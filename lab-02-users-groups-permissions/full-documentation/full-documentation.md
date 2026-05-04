@@ -1,4 +1,4 @@
-# Lab 02 – Users, Groups, and Permissions
+# Lab 02 – Users, Groups, and Permissions | Implementing Least Privilege
 
 ## Objective
 Transform the basic domain into a simulated corporate network by setting up departmental OUs, creating users/groups, and configuring NTFS permissions to enforce the Principle of Least Privilege.
