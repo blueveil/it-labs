@@ -7,7 +7,7 @@ The goal of this lab was to build a secure, functional corporate network environ
 - **DC-01: Domain Controller (Windows Server 2022)**
   - 2 vCPUs / 4GB RAM
   - NIC 1: `NAT`
-  - NIC 2 2: `Internal Network (lab-net)`
+  - NIC 2: `Internal Network (lab-net)`
 - **USER-01: Workstation (Windows 10 Pro)**
   - 2 vCPUs / 4GB RAM
   - NIC: `Internal Network (lab-net)`
