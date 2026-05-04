@@ -12,7 +12,7 @@ The goal of this lab was to transform a flat Active Directory environment into a
 - **USER-01: Workstation**
   - OS: Windows 10 Pro
   - IP: `192.168.10.20`
-  - Context: Domain-joined to `jlab.local`
+- **Domain:** `jlab.local`
 
 ---
 
