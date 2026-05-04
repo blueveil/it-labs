@@ -17,7 +17,7 @@ Learn centralized control of users and machines using Group Policy in a Windows 
 - Expanded the forest and domain to reveal the OU structure created in Lab 02.
 - **Note:** Group Policy Objects are created in the "Group Policy Objects" folder (the vault) before being linked to specific OUs.
 
-![GPMC Overview](/lab-03-group-policy/screenshots/01-gpmc-dc-01.png)
+![GPMC Overview](/lab-03-group-policy/lab-03-group-policy/screenshots/01-gpmc-dc-01.png)
 
 ## Phase 2: Password Policy (Domain Level)
 - **Requirement:** Password policies must be set at the Domain level to affect domain accounts.
@@ -27,7 +27,7 @@ Learn centralized control of users and machines using Group Policy in a Windows 
   - Minimum password length: **10 characters**
   - Password must meet complexity requirements: **Enabled**
 
-![Password Policy Config](screenshots/02-password-policy-dc-01.png)
+![Password Policy Config](/lab-03-group-policy/screenshots/02-password-policy-dc-01.png)
 
 ## Phase 3: Interactive Login Banner
 - Created a new GPO: `SEC_Login_Banner`.
@@ -37,7 +37,7 @@ Learn centralized control of users and machines using Group Policy in a Windows 
   - **Interactive logon: Message text:** `Authorized access only. Activity is monitored.`
 - **Linking:** Linked the GPO to the root of the `jlab.local` domain.
 
-![Login Banner Settings](screenshots/03-gpo-login-banner-dc-01.png)
+![Login Banner Settings](/lab-03-group-policy/screenshots/03-gpo-login-banner-dc-01.png)
 
 ## Phase 4: Endpoint Hardening (Control Panel)
 - Created a new GPO: `USER_Restrict_ControlPanel`.
@@ -45,7 +45,7 @@ Learn centralized control of users and machines using Group Policy in a Windows 
 - **Action:** Enabled **"Prohibit access to Control Panel and PC settings"**.
 - **Linking:** Linked to the **`_Company`** OU to restrict all staff users.
 
-![Control Panel Restriction](screenshots/04-gpo-restrict-control-panel.png)
+![Control Panel Restriction](/lab-03-group-policy/screenshots/04-gpo-restrict-control-panel.png)
 
 ## Phase 5: Network Drive Mapping
 - Created a new GPO: `USER_Drive_Maps`.
@@ -53,14 +53,14 @@ Learn centralized control of users and machines using Group Policy in a Windows 
 - **Configuration:** - **Action:** Create | **Location:** `\\DC-01\Sales` | **Drive Letter:** `S:` | **Label:** `Sales Data`.
 - **Linking:** Linked to the **`_Company`** OU.
 
-![Drive Map Configuration](screenshots/05-drive-map-new-dc-01.png)
+![Drive Map Configuration](/lab-03-group-policy/screenshots/05-drive-map-new-dc-01.png)
 
 ## Phase 6: Screen Lock Timeout
 - Created a new GPO: `SEC_Screen_Lock`. 
 - **Settings:** Configured Screen Saver to be **Enabled**, **Password Protected**, and set a timeout of **600 seconds**.
 - Linked to the **`_Company`** OU.
 
-![Screen Lock Policy](screenshots/06-screen-saver-lock-dc-01.png)
+![Screen Lock Policy](/lab-03-group-policy/screenshots/06-screen-saver-lock-dc-01.png)
 
 ---
 
@@ -69,7 +69,7 @@ Learn centralized control of users and machines using Group Policy in a Windows 
 - Created `USER_Wallpaper` GPO.
 - **Path:** `User Configuration > Policies > Admin Templates > Desktop > Desktop > Desktop Wallpaper`.
 
-![Wallpaper Path](screenshots/07-desktop-wallpaper-enabled-dc-01.png)
+![Wallpaper Path](/lab-03-group-policy/screenshots/07-desktop-wallpaper-enabled-dc-01.png)
 
 ---
 
@@ -78,12 +78,12 @@ Learn centralized control of users and machines using Group Policy in a Windows 
 ### 1. Policy Audit
 - Ran `gpresult /r` on **USER-01** to confirm all GPOs were successfully received from the DC.
 
-![GPResult Output](screenshots/08-gpresult-user-01.png)
+![GPResult Output](/lab-03-group-policy/screenshots/08-gpresult-user-01.png)
 
 ### 2. Wallpaper Extension Fix
 - **Issue:** Wallpaper failed to appear initially on **USER-01**.
 
-![Incorrect User Wallpaper](screenshots/09-incorrect-user-wallpaper-dc-01.png)
+![Incorrect User Wallpaper](/lab-03-group-policy/screenshots/09-incorrect-user-wallpaper-dc-01.png)
 
 - **Discovery:** Verified the GPO path was pointing to `.jpg` while the actual source file in the Public share was a `.png`.
 - **Fix:** Corrected the file extension in the GPO setting to `\\DC-01\Public\USER_Wallpaper.png`.
@@ -91,7 +91,7 @@ Learn centralized control of users and machines using Group Policy in a Windows 
 ### 3. Drive Map (S: Drive) Fix
 - **Issue:** The S: drive did not appear under "This PC" even after a `gpupdate /force`.
 
-![S: Drive Not Visible](screenshots/10-user-drive-maps-not-working-user-01.png)
+![S: Drive Not Visible](/lab-03-group-policy/screenshots/10-user-drive-maps-not-working-user-01.png)
   
 - **Discovery:** Attempting to browse `\\DC-01\Sales` manually resulted in a network error. While the folder existed at `C:\_Shared\Sales`, it was not explicitly shared as a top-level share.
 - **Fix:** On **DC-01**, configured the Sales folder with **Advanced Sharing** using the share name **`Sales`**.
@@ -104,10 +104,10 @@ Learn centralized control of users and machines using Group Policy in a Windows 
 - **Control Panel:** Verified "Access Denied" when attempting to open system settings.
 - **S: Drive:** The Sales Data network drive is now mapped and accessible in File Explorer.
 
-![Login Confirmed](screenshots/11-sec-login-banner-confirmed-user-01.png)
-![Wallpaper Applied](screenshots/12-user-wallpaper-confirmed-user-01.png)
-![Control Panel Blocked](screenshots/13-control-panel-access-denied_confirmed-user-01.png)
-![S: Drive Visible](screenshots/14-user-drive-maps-confirmed-user-01.png)
+![Login Confirmed](/lab-03-group-policy/screenshots/11-sec-login-banner-confirmed-user-01.png)
+![Wallpaper Applied](/lab-03-group-policy/screenshots/12-user-wallpaper-confirmed-user-01.png)
+![Control Panel Blocked](/lab-03-group-policy/screenshots/13-control-panel-access-denied_confirmed-user-01.png)
+![S: Drive Visible](/lab-03-group-policy/screenshots/14-user-drive-maps-confirmed-user-01.png)
 
 ---
 **Lab 03 Finished.**
