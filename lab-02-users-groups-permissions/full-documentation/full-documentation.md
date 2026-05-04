@@ -1,7 +1,7 @@
 # Lab 02 – Users, Groups, and Permissions | Implementing Least Privilege
 
 ## Objective
-Transform the basic domain into a simulated corporate network by setting up departmental OUs, creating users/groups, and configuring NTFS permissions to enforce the Principle of Least Privilege.
+The goal of this lab was to transform a flat Active Directory environment into a simulated corporate hierarchy. By establishing departmental Organizational Units (OUs), managing security groups, and configuring complex NTFS permissions, I implemented a "Zero Trust" approach to file sharing. This project demonstrates proficiency in identity management and securing data at rest.
 
 ## Lab Setup / Environment
 - **DC-01 (Windows Server 2022: Domain Controller & File Server**
