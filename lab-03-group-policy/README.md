@@ -11,6 +11,15 @@ The objective of this lab was to implement centralized management across the dom
   - OS: Windows 10 Pro
   - Target User: `JLAB\s-borne` (Sales Department)
   - Testing Focus: Policy application and preference processing.
+ 
+## Lab Setup / Environment
+- **DC-01 (Windows Server 2022)**
+  - Domain Controller & GPO Management
+  - IP: `192.168.10.10`
+- **USER-01 (Windows 10 Pro)**
+  - Domain Client (Testing environment)
+  - IP: `192.168.10.20`
+  - Logged in as: `JLAB\s-borne` (Sales Team)
 
 ---
 
