@@ -1,4 +1,4 @@
-# Lab 03 – Group Policy
+# Lab 03 – Group Policy | Centralized Endpoint Management & Hardening
 
 ## Objective
 Learn centralized control of users and machines using Group Policy in a Windows Server Active Directory environment.
