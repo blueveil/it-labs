@@ -4,11 +4,11 @@
 The goal of this lab was to build a secure, functional corporate network environment from scratch. By deploying a Windows Server 2022 Domain Controller and integrating a Windows 10 workstation, I established a centralized identity management system. This project demonstrates my ability to handle core infrastructure tasks: networking, server roles, and directory services.
 
 ## Lab Setup / Environment
-- **DC-01: Domain Controller (Windows Server 2022)**
+- **DC-01 (Windows Server 2022): Domain Controller**
   - 2 vCPUs / 4GB RAM
   - NIC 1: `NAT`
   - NIC 2: `Internal Network (lab-net)`
-- **USER-01: Workstation (Windows 10 Pro)**
+- **USER-01 (Windows 10 Pro): Domain Client**
   - 2 vCPUs / 4GB RAM
   - NIC: `Internal Network (lab-net)`
 - **Domain:** `jlab.local`
