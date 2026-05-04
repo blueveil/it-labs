@@ -4,11 +4,9 @@
 Learn centralized control of users and machines using Group Policy in a Windows Server Active Directory environment.
 
 ## Lab Setup / Environment
-- **DC-01 (Windows Server 2022)**
-  - Domain Controller & GPO Management
+- **DC-01 (Windows Server 2022): Domain Controller & GPO Managementr**
   - IP: `192.168.10.10`
-- **USER-01 (Windows 10 Pro)**
-  - Domain Client (Testing environment)
+- **USER-01 (Windows 10 Pro): Domain Client**
   - IP: `192.168.10.20`
   - Logged in as: `JLAB\s-borne` (Sales Team)
 
