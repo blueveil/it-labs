@@ -4,7 +4,7 @@
 The objective of this lab was to implement centralized management across the domain using Group Policy Objects (GPOs). By enforcing security baselines, automating resource mapping, and hardening the workstation environment, I demonstrated how to maintain consistency and security across an enterprise network from a single pane of glass.
  
 ## Lab Setup / Environment
-- **DC-01 (Windows Server 2022): Domain Controller & GPO Managementr**
+- **DC-01 (Windows Server 2022): Domain Controller & GPO Management**
   - IP: `192.168.10.10`
 - **USER-01 (Windows 10 Pro): Domain Client**
   - IP: `192.168.10.20`
@@ -63,7 +63,7 @@ I validated the success of the deployment through both command-line audits and v
 ---
 
 ## Outcome & Key Takeaways
-This lab demonstrated that Group Policy is the most powerful tool in a Windows Administrator's arsenal. I learned that **UNC paths must be meticulously verified** and that the **GPMC** is essential for maintaining a secure and standardized environment. Mastering GPO allows an admin to manage 1,000 machines as easily as they manage one.
+This lab demonstrated that Group Policy is the most powerful tool in a Windows istrator's arsenal. I learned that **UNC paths must be meticulously verified** and that the **GPMC** is essential for maintaining a secure and standardized environment. Mastering GPO allows an  to manage 1,000 machines as easily as they manage one.
 
 ---
 
