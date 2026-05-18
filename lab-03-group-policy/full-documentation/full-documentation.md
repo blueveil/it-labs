@@ -4,7 +4,7 @@
 Learn centralized control of users and machines using Group Policy in a Windows Server Active Directory environment.
 
 ## Lab Setup / Environment
-- **DC-01 (Windows Server 2022): Domain Controller & GPO Managementr**
+- **DC-01 (Windows Server 2022): Domain Controller & GPO Management**
   - IP: `192.168.10.10`
 - **USER-01 (Windows 10 Pro): Domain Client**
   - IP: `192.168.10.20`
@@ -67,7 +67,7 @@ Learn centralized control of users and machines using Group Policy in a Windows 
 ## Phase 7: Wallpaper
 - Created a `Public` folder on `C:\` and shared it as `\\DC-01\Public` with **Read** permissions for **Everyone**.
 - Created `USER_Wallpaper` GPO.
-- **Path:** `User Configuration > Policies > Admin Templates > Desktop > Desktop > Desktop Wallpaper`.
+- **Path:** `User Configuration > Policies > Administrative Templates > Desktop > Desktop > Desktop Wallpaper`.
 
 ![Wallpaper Path](/lab-03-group-policy/screenshots/07-desktop-wallpaper-enabled-dc-01.png)
 
