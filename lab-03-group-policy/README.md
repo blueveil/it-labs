@@ -2,7 +2,7 @@
 
 ## Objective
 The objective of this lab was to implement centralized management across the domain using Group Policy Objects (GPOs). By enforcing security baselines, automating resource mapping, and hardening the workstation environment, I demonstrated how to maintain consistency and security across an enterprise network from a single pane of glass.
- 
+
 ## Lab Setup / Environment
 - **DC-01 (Windows Server 2022): Domain Controller & GPO Management**
   - IP: `192.168.10.10`
@@ -13,58 +13,57 @@ The objective of this lab was to implement centralized management across the dom
 ---
 
 ## Phase 1: Security Baselines (Domain Level)
-Security starts at the root. I configured policies that apply to every account within the `jlab.local` forest.
-- **Corporate Password Policy:** Enforced a 10-character minimum and complexity requirements via the **Default Domain Policy** to mitigate brute-force risks.
-- **Interactive Login Banner:** Created `SEC_Login_Banner` to display a legal notice upon login. This ensures all users are notified that "Activity is monitored," meeting standard compliance requirements.
+Security starts at the root. I configured policies that apply to every account within the `jlab.local` forest to establish core security controls.
+- **Corporate Password Policy:** Enforced a 10-character minimum and complexity requirements via the **Default Domain Policy** to mitigate brute-force risks at the identity level.
+- **Interactive Login Banner:** Created and linked `SEC_Login_Banner` at the domain root to display a legal notice upon logon. This ensures all users are notified that access is authorized only and activity is actively monitored, meeting standard regulatory compliance.
 
-![Login Banner Settings](screenshots/03-gpo-login-banner-dc-01.png)
+![Login Banner Settings](/lab-03-group-policy/screenshots/03-gpo-login-banner-dc-01.png)
 
 ---
 
 ## Phase 2: Endpoint Hardening & Environment Control
-To reduce the attack surface and prevent unauthorized configuration changes, I targeted the `_Company` OU with restrictive policies.
-1. **Control Panel Restriction:** Enabled a GPO to prohibit access to the Control Panel and PC Settings. This prevents standard users from modifying network settings or installing unapproved software.
-2. **Idle Session Security:** Implemented a **10-minute (600s) Screen Lock** policy with password protection to secure unattended workstations.
-3. **Corporate Branding:** Deployed a mandatory desktop wallpaper via a centralized UNC path (`\\DC-01\Public\`) to maintain a professional corporate image across all departments.
+To reduce the local attack surface and prevent unauthorized configuration drift, I targeted the `_Company` OU with restrictive administrative policies.
+1. **Control Panel Restriction:** Enabled a user configuration policy to completely prohibit access to the Control Panel and PC Settings, blocking standard users from altering network configurations or viewing administrative menus.
+2. **Idle Session Security:** Implemented a **10-minute (600s) Screen Lock** policy with mandatory password re-authentication to secure unattended corporate workstations.
+3. **Corporate Branding:** Deployed an enforced desktop wallpaper via a centralized network UNC path (`\\DC-01\Public\`) to establish a standardized workspace environment.
 
 ---
 
 ## Phase 3: Automation via Group Policy Preferences (GPP)
-I utilized **Group Policy Preferences** to improve user productivity by automating resource access.
-- **Dynamic Drive Mapping:** Configured a GPO to automatically map the `S:` drive (Sales Data) for users. 
-- **Strategy:** This eliminates the need for manual mapping by end-users and ensures that departmental storage is always available upon login.
+I utilized **Group Policy Preferences** to improve user workflows and productivity by automating resource provisioning dynamically.
+- **Dynamic Drive Mapping:** Configured a preference policy to automatically map the `S:` drive (Sales Data network share) for targeted corporate identities. 
+- **Strategy:** This eliminates the need for manual script mapping or end-user intervention, ensuring that critical departmental storage is reliably mounted upon user initialization.
 
-![Drive Map Configuration](screenshots/05-drive-map-new-dc-01.png)
+![Drive Map Configuration](/lab-03-group-policy/screenshots/05-drive-map-new-dc-01.png)
 
 ---
 
 ## Phase 4: Troubleshooting & Policy Auditing
-A critical part of this lab was diagnosing why certain policies failed to apply initially.
+An essential part of this deployment was utilizing systemic diagnostic tracking to determine why specific elements failed to apply during initial client checks.
 
 | Issue | Root Cause | Resolution |
 | :--- | :--- | :--- |
-| **Wallpaper Failure** | Extension Mismatch (GPO cited `.jpg`, file was `.png`). | Updated GPO path to match the source file extension. |
-| **Drive Map Failure** | UNC Path Accessibility (Folder was local but not shared). | Enabled **Advanced Sharing** on the Sales folder to make the UNC path reachable. |
-| **GPO Latency** | Policies didn't update immediately. | Executed `gpupdate /force` on the client to trigger an immediate pull. |
+| **Wallpaper Failure** | **Extension Mismatch:** The GPO parameter targeted a `.jpg` string, while the actual asset in the public share was a `.png`. | Updated the GPO source path to accurately match the file system extension. |
+| **Drive Map Failure** | **UNC Path Accessibility:** The destination folder existed locally on the server filesystem but lacked an active SMB share instance. | Configured **Advanced Sharing** on the target subfolder to expose the UNC path to the network. |
+| **GPO Latency** | **Refresh Interval Delay:** The workstation had not yet requested an update check from the Domain Controller. | Executed `gpupdate /force` from the client Command Prompt to trigger an immediate pull. |
 
 ---
 
-## Phase 5: Verification
-I validated the success of the deployment through both command-line audits and visual confirmation on **USER-01**.
-- **Audit:** Ran `gpresult /r` to confirm the client was successfully receiving and filtering the GPOs.
-- **Functional Check:** 
-  - Verified the **Access Denied** message when attempting to open the Control Panel.
-  - Confirmed the **S: Drive** appeared automatically in File Explorer.
-  - Confirmed the **Security Banner** appeared during the Windows logon sequence.
+## Phase 5: Verification & Security Testing
+I validated the success of the deployment through both command-line policy evaluation and visual environment confirmation on **USER-01**.
+- **Policy Audit:** Ran `gpresult /r` on the client workstation to confirm the OS was actively receiving, processing, and executing the administrative GPO baseline.
+- **Functional Checks:** 
+  - Verified the **Access Denied** message blocks standard users from launching system settings.
+  - Confirmed the **S: Drive** automatically populates within File Explorer with write privileges.
+  - Confirmed the **Security Banner** intercepts the user session during the Windows logon sequence.
 
-![Wallpaper Applied](screenshots/12-user-wallpaper-confirmed-user-01.png)
-![S: Drive Visible](screenshots/14-user-drive-maps-confirmed-user-01.png)
+![Wallpaper Applied](/lab-03-group-policy/screenshots/12-user-wallpaper-confirmed-user-01.png)
+![S: Drive Visible](/lab-03-group-policy/screenshots/14-user-drive-maps-confirmed-user-01.png)
 
 ---
 
 ## Outcome & Key Takeaways
-This lab demonstrated that Group Policy is the most powerful tool in a Windows istrator's arsenal. I learned that **UNC paths must be meticulously verified** and that the **GPMC** is essential for maintaining a secure and standardized environment. Mastering GPO allows an  to manage 1,000 machines as easily as they manage one.
+This lab successfully demonstrated that Group Policy is the most powerful tool in a Windows Administrator's arsenal. I learned that **UNC paths and file extensions must be meticulously verified** during stage planning, and that the **GPMC** is the definitive framework for maintaining a secure, standardized endpoint environment. Mastering GPO design allows an administrator to manage 1,000 machines as efficiently as they manage one.
 
 ---
-
 **Lab 03 Finished.**
