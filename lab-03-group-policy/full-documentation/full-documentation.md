@@ -19,6 +19,8 @@ Learn centralized control of users and machines using Group Policy in a Windows 
 
 ![GPMC Overview](/lab-03-group-policy/screenshots/01-gpmc-dc-01.png)
 
+---
+
 ## Phase 2: Password Policy (Domain Level)
 - **Requirement:** Password policies must be set at the Domain level to affect domain accounts.
 - Edited the **Default Domain Policy**.
@@ -28,6 +30,8 @@ Learn centralized control of users and machines using Group Policy in a Windows 
   - Password must meet complexity requirements: **Enabled**
 
 ![Password Policy Config](/lab-03-group-policy/screenshots/02-password-policy-dc-01.png)
+
+---
 
 ## Phase 3: Interactive Login Banner
 - Created a new GPO: `SEC_Login_Banner`.
@@ -39,6 +43,8 @@ Learn centralized control of users and machines using Group Policy in a Windows 
 
 ![Login Banner Settings](/lab-03-group-policy/screenshots/03-gpo-login-banner-dc-01.png)
 
+---
+
 ## Phase 4: Endpoint Hardening (Control Panel)
 - Created a new GPO: `USER_Restrict_ControlPanel`.
 - **Path:** `User Configuration > Policies > Administrative Templates > Control Panel`.
@@ -47,6 +53,8 @@ Learn centralized control of users and machines using Group Policy in a Windows 
 
 ![Control Panel Restriction](/lab-03-group-policy/screenshots/04-gpo-restrict-control-panel.png)
 
+---
+
 ## Phase 5: Network Drive Mapping
 - Created a new GPO: `USER_Drive_Maps`.
 - **Path:** `User Configuration > Preferences > Windows Settings > Drive Maps`.
@@ -54,6 +62,8 @@ Learn centralized control of users and machines using Group Policy in a Windows 
 - **Linking:** Linked to the **`_Company`** OU.
 
 ![Drive Map Configuration](/lab-03-group-policy/screenshots/05-drive-map-new-dc-01.png)
+
+---
 
 ## Phase 6: Screen Lock Timeout
 - Created a new GPO: `SEC_Screen_Lock`. 
