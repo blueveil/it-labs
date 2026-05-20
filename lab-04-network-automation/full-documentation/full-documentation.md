@@ -116,8 +116,8 @@ All infrastructure modifications in this lab were executed using a simulated tic
 
 ## Phase 6: Close the Service Request Ticket
 
-- Opened the `sr-04-dhcp-deployment.md` tracking ticket in the repository.
-- Created `sr-04-dhcp-deployment-resolved.md`, then updated the document status from **IN PROGRESS** to **RESOLVED** and appended comprehensive implementation details and metric results to finalize the portfolio audit trail.
+- Opened the `sr-1004-dhcp-deployment.md` tracking ticket in the repository.
+- Created `sr-1004-dhcp-deployment-resolved.md`, then updated the document status from **IN PROGRESS** to **RESOLVED** and appended comprehensive implementation details and metric results to finalize the portfolio audit trail.
 
 ---
 **Lab 04 Finished.**
